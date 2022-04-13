@@ -1,0 +1,50 @@
+<!doctype html>
+    <html lang="pt-BR">
+        <head>
+            <meta charset="utf-8">
+            <title>Requisição XMLHttpRequest</title>
+        </head>
+ <body>
+    <h1>Imagens Aleatórios de Cachorros</h1>
+        <p>A partir do click no botão abaixo uma nova imagem aleatória de cachorros será
+carregada utilizando requisições assíncronas com XMLHttpRequest</p>
+
+    <img id="img_dog" src="" alt="Aguardando a imagem ser carregada"  width="500px" height="300px" />
+    <br/>
+        <button onclick="carregarImagens()">Carregar Imagens</button>
+ </body>
+    <script type="text/javascript">
+
+    function carregarImagens(){
+
+        var carregarImg= new XMLHttpRequest();//a variavel carregarImg é instanciada para assim toda a referencia deve ser feita por essa variavel
+    var url = "https://dog.ceo/api/breeds/image/random"
+
+    carregarImg.open("GET", url, true);
+
+    carregarImg.onreadystatechange = function() {
+    if (carregarImg.readyState == 3) {
+    console.log('Carregando o conteúdo');
+    }
+    if (carregarImg.readyState == 4) {
+
+    var jsonResponse = JSON.parse(carregarImg.responseText);
+
+    console.log('Requisição Finalizada');
+    console.log('Resultado da Requisição: ' + jsonResponse);
+    console.log('Resultado da Requisição: ' + jsonResponse.message);
+
+    var imgDog = document.getElementById("img_dog");
+    imgDog.src = jsonResponse.message;
+        }
+      };
+
+      carregarImg.send(null);
+
+ }
+
+ //Mesmo código porem com a API fetch
+
+ 
+ </script>
+ </html>
